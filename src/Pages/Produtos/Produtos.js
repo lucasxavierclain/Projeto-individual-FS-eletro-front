@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, ListGroup } from 'react-bootstrap'
-import Produto from '../../Componentes/Produto'
+import { lazy, Suspense } from 'react';
 
+const Produto = lazy(() => import('../../Componentes/Produto'));
 function Produtos() {
     const [produtos, setProdutos] = useState([]);
     useEffect(async () => {
@@ -13,58 +14,60 @@ function Produtos() {
 
     }, []);
 
-    function exibirTodos(){
-        let elementos= document.getElementsByClassName("produto");
-        for(let i=0; i<elementos.length;i++){
-            elementos[i].style="display:block";
+    function exibirTodos() {
+        let elementos = document.getElementsByClassName("produto");
+        for (let i = 0; i < elementos.length; i++) {
+            elementos[i].style = "display:block";
         }
     }
-    function filtrar(categoria){
+    function filtrar(categoria) {
 
-        let elementos= document.getElementsByClassName("box-produtos");
+        let elementos = document.getElementsByClassName("box-produtos");
         console.log(elementos)
-        for(let i=0; i<elementos.length;i++){
+        for (let i = 0; i < elementos.length; i++) {
             console.log(elementos[i].id);
-            if(categoria==elementos[i].id)
-                elementos[i].style="display:block";
+            if (categoria == elementos[i].id)
+                elementos[i].style = "display:block";
             else
-            elementos[i].style="display:none";
-            
+                elementos[i].style = "display:none";
+
         }
     }
-    
-    
+
+
 
     return (
         <Container fluid>
             <Container fluid>
-            <ListGroup>
-                    <ListGroup.Item action onclick={exibirTodos}  variant="danger">
-                    Todos (12)
+                <ListGroup>
+                    <ListGroup.Item action onclick={exibirTodos} variant="danger">
+                        Todos (12)
                 </ListGroup.Item>
-                <ListGroup.Item action onclick={filtrar('televisao')} variant="danger">
-                    Televisão (3)
+                    <ListGroup.Item action onclick={filtrar('televisao')} variant="danger">
+                        Televisão (3)
                 </ListGroup.Item>
                     <ListGroup.Item action onclick={filtrar('celular')} variant="danger">
-                    Celular (3)
+                        Celular (3)
                 </ListGroup.Item>
                     <ListGroup.Item action onclick={filtrar('maquinaDeLavar')} variant="danger">
-                    Máquina de lavar (1)
+                        Máquina de lavar (1)
                 </ListGroup.Item>
-                <ListGroup.Item action onclick={filtrar('geladeira')} variant="danger">
-                    Geladeira (3)
+                    <ListGroup.Item action onclick={filtrar('geladeira')} variant="danger">
+                        Geladeira (3)
                 </ListGroup.Item>
                     <ListGroup.Item action onclick={filtrar('microndas')} variant="danger">
-                    Microondas (2)
+                        Microondas (2)
                 </ListGroup.Item>
 
-            </ListGroup>
+                </ListGroup>
             </Container>
+            <Suspense fallback={<h2 className='carregando '>Carregando</h2>}>
+                <Row>
 
-            <Row>
+                    {produtos && produtos.map(item => <Produto imagem={item.nomeImagem} categoria={item.categoria} nome={item.descricao} precoAnterior={item.precoAnterior} precoFinal={item.preco} />)}
 
-                {produtos && produtos.map(item => <Produto imagem={item.nomeImagem} categoria={item.categoria} nome={item.descricao} precoAnterior={item.precoAnterior} precoFinal={item.preco} />)}
-            </Row>
+                </Row>
+            </Suspense>
         </Container>
 
     )

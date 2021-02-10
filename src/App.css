@@ -5,6 +5,11 @@ body{
 h1{
     text-align: center;
 }
+.carregando{
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
 .menu-hamburguer{
     background-color: white !important;
 }

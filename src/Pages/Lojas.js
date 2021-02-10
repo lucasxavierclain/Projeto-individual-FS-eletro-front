@@ -1,14 +1,17 @@
 import { Container } from 'react-bootstrap'
+import { lazy, Suspense } from 'react'
+import '../App.css'
+const Loja = lazy(() => import('../Componentes/Lojas/Lojas'))
 export default function Lojas() {
+
     return (
-        <Container fluid className='d-flex jumbotron jumbotron-fluid'>
-         
-            <div className='mx-auto text-center'>
-                <h2>Rua guilherme veloso</h2>
-                <p>Praça seca - Rio de janeiro -RJ</p>
-                <p>Jacarepaguá</p>
-            </div>
-           
-        </Container>
+
+        <Suspense fallback={<h2 className='carregando'>Carregando...</h2>}>
+            <Container fluid className='d-flex jumbotron jumbotron-fluid'>
+
+                <Loja />
+
+            </Container>
+        </Suspense>
     )
 }
