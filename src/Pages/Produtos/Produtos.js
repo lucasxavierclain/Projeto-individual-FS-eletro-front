@@ -8,31 +8,13 @@ function Produtos() {
     useEffect(async () => {
         const resposta = await fetch("http://localhost:3000/Produtos")
         const dados = await resposta.json()
-        console.log(dados)
+
 
         setProdutos(dados);
 
     }, []);
 
-    function exibirTodos() {
-        let elementos = document.getElementsByClassName("produto");
-        for (let i = 0; i < elementos.length; i++) {
-            elementos[i].style = "display:block";
-        }
-    }
-    function filtrar(categoria) {
 
-        let elementos = document.getElementsByClassName("box-produtos");
-        console.log(elementos)
-        for (let i = 0; i < elementos.length; i++) {
-            console.log(elementos[i].id);
-            if (categoria == elementos[i].id)
-                elementos[i].style = "display:block";
-            else
-                elementos[i].style = "display:none";
-
-        }
-    }
 
 
 
@@ -40,22 +22,22 @@ function Produtos() {
         <Container fluid>
             <Container fluid>
                 <ListGroup>
-                    <ListGroup.Item action onclick={exibirTodos} variant="danger">
+                    <ListGroup.Item action variant="danger">
                         Todos (12)
                 </ListGroup.Item>
-                    <ListGroup.Item action onclick={filtrar('televisao')} variant="danger">
+                    <ListGroup.Item action variant="danger">
                         Televisão (3)
                 </ListGroup.Item>
-                    <ListGroup.Item action onclick={filtrar('celular')} variant="danger">
+                    <ListGroup.Item action variant="danger">
                         Celular (3)
                 </ListGroup.Item>
-                    <ListGroup.Item action onclick={filtrar('maquinaDeLavar')} variant="danger">
+                    <ListGroup.Item action variant="danger">
                         Máquina de lavar (1)
                 </ListGroup.Item>
-                    <ListGroup.Item action onclick={filtrar('geladeira')} variant="danger">
+                    <ListGroup.Item action variant="danger">
                         Geladeira (3)
                 </ListGroup.Item>
-                    <ListGroup.Item action onclick={filtrar('microndas')} variant="danger">
+                    <ListGroup.Item action variant="danger">
                         Microondas (2)
                 </ListGroup.Item>
 
@@ -64,11 +46,11 @@ function Produtos() {
             <Suspense fallback={<h2 className='carregando '>Carregando</h2>}>
                 <Row>
 
-                    {produtos && produtos.map(item => <Produto imagem={item.nomeImagem} categoria={item.categoria} nome={item.descricao} precoAnterior={item.precoAnterior} precoFinal={item.preco} />)}
+                    {produtos && produtos.map(item => <Produto imagem={item.nomeImagem} categoria={item.categoria} nome={item.descricao} key={item.idprodutos} precoAnterior={item.precoAnterior} precoFinal={item.preco} />)}
 
                 </Row>
             </Suspense>
-        </Container>
+        </Container >
 
     )
 }
